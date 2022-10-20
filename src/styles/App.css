@@ -1,0 +1,140 @@
+@font-face {
+  font-family: "vcr";
+  src: url("../styles/vcr.ttf");
+}
+
+* {
+  font-family: "vcr";
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  text-decoration: none;
+  background: none;
+  outline: none;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+}
+
+:root {
+  width: 100vw;
+  height: 100vh;
+
+  --numOfCols: 0;
+}
+
+#body {
+  height: 80vh;
+  min-height: 600px;
+  background-image: linear-gradient(
+    to bottom,
+    rgb(53, 113, 197),
+    rgb(58, 212, 255)
+  );
+  width: 100%;
+}
+
+#mainGameCont {
+  width: 100%;
+  height: 70%;
+  min-height: 70%;
+}
+
+.cardBorder,
+#body,
+.statsCont,
+#mainGameCont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#body {
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.statsCont,
+.bottomPadding {
+  font-size: 3em;
+  height: 15%;
+  min-height: 15%;
+  color: rgb(0, 35, 73);
+
+  padding-top: 35px;
+}
+
+.statsCont {
+  gap: 200px;
+}
+
+.cardBorder {
+  background-color: rgb(72, 157, 255);
+
+  width: 200px;
+  height: 250px;
+
+  border: 5px solid rgb(255, 255, 255);
+  border-radius: 10px;
+
+  overflow: hidden;
+
+  filter: drop-shadow(10px 20px 5px rgba(19, 20, 22, 0.372));
+
+  transition: all 50ms ease-in-out;
+}
+
+.cardImage {
+  width: 200px;
+}
+
+.cardBorder:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1) drop-shadow(10px 20px 15px rgba(18, 20, 26, 0.424));
+  cursor: pointer;
+}
+
+.cardBorder:active {
+  transform: scale(0.95);
+  filter: brightness(0.95) drop-shadow(5px 5px 5px rgba(18, 20, 26, 0.372));
+  cursor: pointer;
+}
+
+.cardLoader {
+  height: 100%;
+  min-height: 100%;
+  display: grid;
+
+  align-items: center;
+
+  grid-template-columns: repeat(var(--numOfCols), auto);
+  grid-template-rows: repeat(2, auto);
+
+  margin-top: 70px;
+
+  row-gap: 30px;
+  column-gap: 30px;
+}
+
+.redText {
+  color: red;
+}
+
+.goldText {
+  color: gold;
+}
+
+.healthDiv {
+  border-radius: 20px;
+  padding: 5px 10px 5px 10px;
+
+  background-color: rgb(255, 255, 255);
+}
+
+.heartIcons {
+  font-size: 30px;
+}

@@ -1,0 +1,56 @@
+@font-face {
+  font-family: "vcr";
+  src: url("../styles/vcr.ttf");
+}
+
+* {
+  font-family: "vcr";
+}
+#headerCont {
+  height: 15vh;
+  min-height: 100px;
+  width: 100%;
+
+  background-color: rgb(25, 25, 28);
+
+  filter: drop-shadow(0px 5px 10px rgba(15, 18, 28, 0.58));
+}
+
+#headerCont,
+.headerTitleCont,
+.headerTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.headerTitleCont {
+  height: 80%;
+  width: 100%;
+
+  gap: 40px;
+}
+
+.pokeBallImg {
+  height: 100px;
+}
+
+.pokeBallImg.flip {
+  transform: scaleX(-1);
+}
+
+.headerTitle {
+  flex-direction: column;
+  user-select: none;
+}
+
+.headerTitle > h1 {
+  font-size: 70px;
+  color: rgb(255, 221, 70);
+  font-weight: bold;
+}
+
+.headerTitle > h2 {
+  font-size: 20px;
+  color: white;
+}
