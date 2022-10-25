@@ -209,5 +209,5 @@ function sortLevels() {
 
   return arr;
 }
-console.log(levelStorage);
+
 export default levelStorage;

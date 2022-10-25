@@ -52,7 +52,6 @@ function App() {
 
       gameWon();
     } else {
-      console.log(finalLevel);
       level++;
       isHealthLvCount++;
       setDisplayLevel(level);
@@ -60,7 +59,6 @@ function App() {
       if (isHealthLvCount == 3) {
         isHealthLvCount = 0;
         addHealth();
-        console.log(level % 3);
       }
     }
   }
