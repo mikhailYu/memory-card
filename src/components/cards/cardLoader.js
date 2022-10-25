@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import pokemonStorage from "../levels/pokemonStorage";
 import levelStorage from "../levels/levels";
+import { levelStorageBonus1, levelStorageBonus2 } from "../levels/levels-bonus";
 import CardCreate from "./cardCreate";
 import uniqid from "uniqid";
 import shuffleCards from "./shuffleOrder";
 
 function CardLoader(props) {
   let loadLevel = props.getLevel();
-  let cards = levelStorage[loadLevel].cards;
+  let stage = props.getCurrStage();
+  let cards = loadLevelSelector();
   let numToLoad = cards.length;
   let cardsToLoad = [];
   const [calledCards, setCalledCards] = useState(loadCards());
@@ -30,6 +32,16 @@ function CardLoader(props) {
     });
     updateGridCols();
     return shuffleCards(cardsToLoad);
+  }
+
+  function loadLevelSelector() {
+    if (stage == "main") {
+      return levelStorage[loadLevel].cards;
+    } else if (stage == "bonus1") {
+      return levelStorageBonus1[loadLevel].cards;
+    } else {
+      return levelStorageBonus2[loadLevel].cards;
+    }
   }
   function passLoss() {
     props.playerLost();
@@ -97,7 +109,8 @@ function CardLoader(props) {
 
   function resetCardLoader() {
     loadLevel = props.getLevel();
-    cards = levelStorage[loadLevel].cards;
+    stage = props.getCurrStage();
+    cards = loadLevelSelector();
     numToLoad = cards.length;
     cardsToLoad = [];
     winCount = 0;

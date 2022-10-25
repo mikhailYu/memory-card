@@ -3,8 +3,8 @@ import "../../styles/MiscScreens.css";
 
 function PreGameScreen(props) {
   return (
-    <div className="textScreenCont">
-      <div className="textBoxCont">
+    <div className="textScreenCont rulesCont">
+      <div className="textBoxCont ">
         <h1 className="rulesH1">RULES:</h1>
         <div className="rulesTextCont">
           <p>
@@ -12,13 +12,17 @@ function PreGameScreen(props) {
             utilizing React.
           </p>
           <p>
-            The rules are simple. <span className="redText"> Do not click</span>{" "}
-            on the same Pokemon twice. As you progress, the levels get more
-            difficult. You gain <span className="goldText"> points</span> for
-            every card clicked and for completing levels. Additionally the
-            amount of<span className="goldText"> points</span> you earn per card
-            is <span className="goldText"> increased </span>
-            the further you get.
+            <span className="redText"> Do not click</span> on the same Card
+            twice. You gain <span className="goldText"> points</span> for every
+            card clicked and for completing levels. Additionally the amount of
+            <span className="goldText"> points</span> you earn is{" "}
+            <span className="goldText"> increased </span>
+            with each level. You gain a <span className="redText">
+              {" "}
+              heart
+            </span>{" "}
+            every 3 levels. Any extra hearts get converted to bonus{" "}
+            <span className="goldText"> points</span>.
           </p>
           <p>
             You can unlock <span className="redText"> bonus levels</span> once
@@ -28,7 +32,7 @@ function PreGameScreen(props) {
           </p>
         </div>
       </div>
-      <div className="screenButtonsCont">
+      <div className="screenButtonsCont startGameButtonCont">
         <button
           className="screenButton startGameButton"
           onClick={() => {

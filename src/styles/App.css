@@ -23,7 +23,7 @@
 :root {
   width: 100vw;
   height: 100vh;
-
+  overflow: hidden;
   --numOfCols: 0;
 }
 
@@ -69,7 +69,9 @@
 }
 
 .statsCont {
-  gap: 200px;
+  gap: 10%;
+  width: 70%;
+  flex-wrap: wrap;
 }
 
 .cardBorder {
@@ -118,6 +120,11 @@
 
   row-gap: 30px;
   column-gap: 30px;
+}
+
+.scoreDiv,
+.levelDiv {
+  font-size: 80%;
 }
 
 .redText {

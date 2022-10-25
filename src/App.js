@@ -7,14 +7,20 @@ import PreGameScreen from "./components/pageView/gameStartScreen";
 import GameOverScreen from "./components/pageView/gameOverScreen";
 import setBestScore from "./components/levels/bestScore";
 import levelStorage from "./components/levels/levels";
+import {
+  levelStorageBonus1,
+  levelStorageBonus2,
+} from "./components/levels/levels-bonus";
 
 function App() {
   let level;
   let score = 0;
   let bestScore = 0;
-  let finalLevel = levelStorage.length - 1;
   let health = 0;
   let isHealthLvCount = 0;
+  let mainLvs = levelStorage.length - 1;
+  let bonus1Lvs = levelStorageBonus1.length - 1;
+  let bonus2Lvs = levelStorageBonus2.length - 1;
 
   const [mainSegment, setMainSegment] = useState(PreGameScreen());
   const [gameState, setGameState] = useState("preGame");
@@ -22,19 +28,31 @@ function App() {
   const [displayLevel, setDisplayLevel] = useState(level);
   const [displayBestScore, setDisplayBestScore] = useState(0);
   const [displayHealth, setDisplayHealth] = useState(updateHealth());
+  const [bonus1, setBonus1] = useState(false);
+  const [bonus2, setBonus2] = useState(false);
+  const [currStage, setCurrStage] = useState("main");
+  const [finalLevel, setFinalLevel] = useState(mainLvs);
 
-  function resetStats() {
+  function resetStats(isFullHealth) {
     // set level here man
     level = 1;
-    health = 3;
     isHealthLvCount = 0;
+    score = 0;
+
+    if (isFullHealth) {
+      health = 5;
+    } else {
+      health = 3;
+    }
   }
 
   function levelWon() {
     if (level == finalLevel) {
       addScoreLevelWin();
+
       gameWon();
     } else {
+      console.log(finalLevel);
       level++;
       isHealthLvCount++;
       setDisplayLevel(level);
@@ -78,8 +96,12 @@ function App() {
   }
 
   function gameWon() {
+    score += health * 1000;
+    setDisplayScore(score);
+
     bestScore = setBestScore(score);
     setDisplayBestScore(bestScore);
+    checkBonusUnlock();
     setGameState("gameWon");
   }
 
@@ -102,6 +124,8 @@ function App() {
   function retry() {
     score = 0;
     setDisplayScore(score);
+    setCurrStage("main");
+    setFinalLevel(mainLvs);
     setGameState("inGame");
   }
 
@@ -112,13 +136,49 @@ function App() {
   function addScore() {
     score = score + Math.ceil(level / 3) * 5;
 
+    checkBonusUnlock();
     setDisplayScore(score);
+  }
+
+  function checkBonusUnlock() {
+    if (score > 10000) {
+      setBonus1(true);
+    }
+
+    if (score > 20000) {
+      setBonus2(true);
+    }
+  }
+
+  function selectBonus(bonusStage) {
+    setGameState("inGame");
+    if (bonusStage == "bonus1") {
+      setFinalLevel(bonus1Lvs);
+    } else {
+      setFinalLevel(bonus2Lvs);
+    }
+
+    setCurrStage(bonusStage);
   }
 
   function addScoreLevelWin() {
     addScore();
     score = score + level * 10;
     setDisplayScore(score);
+  }
+
+  function checkBonusUnlock1() {
+    checkBonusUnlock();
+    return bonus1;
+  }
+
+  function checkBonusUnlock2() {
+    checkBonusUnlock();
+    return bonus2;
+  }
+
+  function getCurrStage() {
+    return currStage;
   }
 
   function hideStats() {
@@ -129,6 +189,10 @@ function App() {
 
   function showStats() {
     document.querySelector(".scoreDiv").style.display = "inline-block";
+    showStatsLvHealth();
+  }
+
+  function showStatsLvHealth() {
     document.querySelector(".levelDiv").style.display = "inline-block";
     document.querySelector(".healthDiv").style.display = "inline-block";
   }
@@ -137,8 +201,8 @@ function App() {
     if (gameState == "preGame") {
       setMainSegment(<PreGameScreen startGame={startGame} />);
       hideStats();
-    } else if (gameState == "inGame") {
-      resetStats();
+    } else if (gameState == "inGame" && currStage == "main") {
+      resetStats(false);
 
       setDisplayHealth(updateHealth());
       setDisplayLevel(level);
@@ -148,9 +212,27 @@ function App() {
           getLevel={getLevel}
           playerLost={playerLost}
           addScore={addScore}
+          getCurrStage={getCurrStage}
         />
       );
       showStats();
+    } else if (
+      gameState == "inGame" &&
+      (currStage == "bonus1" || currStage == "bonus2")
+    ) {
+      resetStats(true);
+      setDisplayHealth(updateHealth());
+      setDisplayLevel(level);
+      setMainSegment(
+        <CardLoader
+          levelWon={levelWon}
+          getLevel={getLevel}
+          playerLost={playerLost}
+          addScore={addScore}
+          getCurrStage={getCurrStage}
+        />
+      );
+      showStatsLvHealth();
     } else if (gameState == "gameOver") {
       hideStats();
       setMainSegment(
@@ -160,6 +242,10 @@ function App() {
           displaysScore={displaysScore}
           displayBestScore={displayBestScore}
           isWon={false}
+          bonus1={checkBonusUnlock1}
+          bonus2={checkBonusUnlock2}
+          selectBonus={selectBonus}
+          getCurrStage={getCurrStage}
         />
       );
     } else if (gameState == "gameWon") {
@@ -171,6 +257,10 @@ function App() {
           displaysScore={displaysScore}
           displayBestScore={displayBestScore}
           isWon={true}
+          bonus1={checkBonusUnlock1}
+          bonus2={checkBonusUnlock2}
+          selectBonus={selectBonus}
+          getCurrStage={getCurrStage}
         />
       );
     }

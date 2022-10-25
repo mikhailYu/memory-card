@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 function CardCreate(props) {
   // toggle dev tool here
-  let devTools = true;
+  let devTools = false;
   const [redBg, setRedBg] = useState(null);
   const [isRed, setIsRed] = useState(false);
 

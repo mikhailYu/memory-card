@@ -28,11 +28,12 @@
   height: 80%;
   width: 100%;
 
-  gap: 40px;
+  gap: 3%;
 }
 
 .pokeBallImg {
-  height: 100px;
+  width: 5vw;
+  min-width: 100px;
 }
 
 .pokeBallImg.flip {
@@ -45,7 +46,7 @@
 }
 
 .headerTitle > h1 {
-  font-size: 70px;
+  font-size: 300%;
   color: rgb(255, 221, 70);
   font-weight: bold;
 }
